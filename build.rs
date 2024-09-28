@@ -5,6 +5,7 @@ use std::{env, fs, path::PathBuf, process::Command};
 
 const PROTO_FILES: [&str; 1] = ["occurrence/v1/occurrences_service.proto"];
 
+//INFO: change this to update version
 const BUF_SCHEMA: &str = "buf.build/zizico2/prociv-reverse-proxy:228c470f729042b69cf6b9360e2bad4b";
 
 fn main() -> anyhow::Result<()> {
