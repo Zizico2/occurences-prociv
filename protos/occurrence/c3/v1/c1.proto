@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+// Fenómenos naturais
+package occurrence.c3.v1;
+
+// Incêndios rurais
+enum C1 {
+  C1_UNSPECIFIED = 0;
+  // Povoamento florestal
+  C1_C1 = 1;
+  // Mato
+  C1_C3 = 2;
+  // Agrícola
+  C1_C5 = 3;
+  // Consolidação de rescaldo
+  C1_C7 = 4;
+  // Gestão de combustível
+  C1_C9 = 5;
+  // Queima
+  C1_C11 = 6;
+}

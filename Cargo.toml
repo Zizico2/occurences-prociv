@@ -51,8 +51,21 @@ macros = { version = "0.1.0", path = "macros" }
 [build-dependencies]
 anyhow = "1.0.89"
 protox = "0.7.1"
-tempfile = "3.12.0"
 tonic-build = "0.12.3"
+reqwest = { version = "0.12.7", default-features = false, features = [
+    "charset",
+    "http2",
+    "rustls-tls",
+    "stream",
+    "multipart",
+    "json",
+] }
+tokio = { version = "1.40.0", features = ["full", "tracing"] }
+async-compression = { version = "0.4.12", features = ["tokio", "zlib"] }
+tokio-tar = "0.3.1"
+futures = "0.3.30"
+async-tempfile = "0.6.0"
+zip-extract = "0.2.1"
 
 [profile.release]
 codegen-units = 1

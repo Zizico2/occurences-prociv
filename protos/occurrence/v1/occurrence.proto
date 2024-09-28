@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package occurrence.v1;
+
+import "foundation/v1/coordinates.proto";
+import "google/protobuf/timestamp.proto";
+import "occurrence/v1/grouped_status.proto";
+import "occurrence/v1/kind.proto";
+import "occurrence/v1/occurrence_status.proto";
+import "spatial_planning/v1/crepc.proto";
+import "spatial_planning/v1/csrepc.proto";
+
+message Occurrence {
+  Kind kind = 1;
+  foundation.v1.Coordinates location = 2;
+  google.protobuf.Timestamp start_date = 3;
+  google.protobuf.Timestamp data_generated_at = 4;
+  spatial_planning.v1.CREPC crepc = 5;
+  spatial_planning.v1.CSREPC csrepc = 6;
+  OccurrenceStatus occurence_status = 7;
+  GroupedStatus grouped_status = 8;
+  uint32 number_of_air_means = 9;
+  uint32 number_of_water_means = 10;
+  uint32 number_of_land_means = 11;
+  uint32 number_of_operatives = 12;
+  uint64 anepc_number = 13;
+}

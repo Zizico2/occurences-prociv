@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package occurrence.c4.v1;
+
+// Intervenção em conflitos legais
+enum C2 {
+  C2_UNSPECIFIED = 0;
+  // Ameaça de explosão
+  C2_C1 = 1;
+  // Explosão
+  C2_C3 = 2;
+  // Suicídio/homicídio na forma tentada
+  C2_C7 = 3;
+  // Suicídio/homicídio consumado
+  C2_C9 = 4;
+}

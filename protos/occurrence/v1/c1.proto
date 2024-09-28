@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package occurrence.v1;
+
+import "occurrence/c1/v1/c1.proto";
+
+message C1 {
+  oneof inner {
+    occurrence.c1.v1.C1 c1 = 1;
+  }
+}
