@@ -30,13 +30,17 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - id: github_repository
+        uses: ASzc/change-string-case-action@v6
+        with:
+          string: ${{ github.repository }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: |
-            ghcr.io/${{ github.repository }}
+            ghcr.io/${{ steps.github_repository.outputs.lowercase }}
 
       - name: Build and push Docker images
         id: push
@@ -49,11 +53,10 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=ghcr.io/zizico2/occurences-prociv:buildcache
           cache-to: type=registry,ref=ghcr.io/zizico2/occurences-prociv:buildcache,mode=max
-          
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ghcr.io/${{ github.repository }}
+          subject-name: ghcr.io/${{ steps.github_repository.outputs.lowercase }}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
