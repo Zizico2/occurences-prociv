@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package foundation.v1;
-
-message Coordinates {
-  double latitude = 1;
-  double longitude = 2;
-}
