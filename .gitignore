@@ -6,3 +6,4 @@ node_modules
 .vercel
 .dev.vars
 .wrangler
+/___protos
