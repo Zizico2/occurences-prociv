@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package occurrence.v1;
+
+import "occurrence/v1/occurrence.proto";
+
+service OccurrencesService {
+  rpc ListOccurrences(ListOccurrencesRequest) returns (stream ListOccurrencesResponse);
+}
+
+message ListOccurrencesRequest {}
+message ListOccurrencesResponse {
+  Occurrence occurrence = 1;
+}

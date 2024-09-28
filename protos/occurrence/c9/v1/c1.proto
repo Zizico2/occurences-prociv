@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package occurrence.c9.v1;
+
+// Operações e estados de alerta
+enum C1 {
+  C1_UNSPECIFIED = 0;
+  // Pré-posicionamento de meios DECIR
+  C1_C3 = 1;
+}

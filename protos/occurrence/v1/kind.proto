@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package occurrence.v1;
+
+import "occurrence/v1/c1.proto";
+import "occurrence/v1/c2.proto";
+import "occurrence/v1/c3.proto";
+import "occurrence/v1/c4.proto";
+import "occurrence/v1/c9.proto";
+
+message Kind {
+  oneof inner {
+    occurrence.v1.C1 c1 = 1;
+    occurrence.v1.C2 c2 = 2;
+    occurrence.v1.C3 c3 = 3;
+    occurrence.v1.C4 c4 = 4;
+    occurrence.v1.C9 c9 = 5;
+  }
+}

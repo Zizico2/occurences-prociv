@@ -1,0 +1,8 @@
+/target
+.env
+.terraform
+node_modules
+.next
+.vercel
+.dev.vars
+.wrangler

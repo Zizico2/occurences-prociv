@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package occurrence.v1;
+
+// TODO: thing about this enum
+enum GroupedStatus {
+  GROUPED_STATUS_UNSPECIFIED = 0;
+  GROUPED_STATUS_DISPATCHING = 1;
+  GROUPED_STATUS_ACTIVE = 2;
+  GROUPED_STATUS_RESOLVING = 3;
+  GROUPED_STATUS_CONCLUDING = 4;
+}

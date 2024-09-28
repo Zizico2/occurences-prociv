@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package spatial_planning.v1;
+
+enum CSREPC {
+  CSREPC_UNSPECIFIED = 0;
+  // Comando Sub-Regional do Alto Minho
+  CSREPC_C1 = 1;
+  // Comando Sub-Regional do Alto Tâmega e Barroso
+  CSREPC_C2 = 2;
+  // Comando Sub-Regional da Área Metropolitana do Porto
+  CSREPC_C3 = 3;
+  // Comando Sub-Regional do Ave
+  CSREPC_C4 = 4;
+  // Comando Sub-Regional do Cávado
+  CSREPC_C5 = 5;
+  // Comando Sub-Regional do Douro
+  CSREPC_C6 = 6;
+  // Comando Sub-Regional do Tâmega e Sousa
+  CSREPC_C7 = 7;
+  // Comando Sub-Regional das Terras de Trás-os-Montes
+  CSREPC_C8 = 8;
+  // Comando Sub-Regional da Beira Baixa
+  CSREPC_C9 = 9;
+  // Comando Sub-Regional das Beiras e Serra da Estrela
+  CSREPC_C10 = 10;
+  // Comando Sub-Regional da Região de Aveiro
+  CSREPC_C11 = 11;
+  // Comando Sub-Regional da Região de Coimbra
+  CSREPC_C12 = 12;
+  // Comando Sub-Regional da Região de Leiria
+  CSREPC_C13 = 13;
+  // Comando Sub-Regional de Viseu Dão Lafões
+  CSREPC_C14 = 14;
+  // Comando Sub-Regional da Grande Lisboa
+  CSREPC_C15 = 15;
+  // Comando Sub-Regional da Península de Setúbal
+  CSREPC_C16 = 16;
+  // Comando Sub-Regional da Lezíria do Tejo
+  CSREPC_C17 = 17;
+  // Comando Sub-Regional do Médio Tejo
+  CSREPC_C18 = 18;
+  // Comando Sub-Regional do Oeste
+  CSREPC_C19 = 19;
+  // Comando Sub-Regional do Alentejo Central
+  CSREPC_C20 = 20;
+  // Comando Sub-Regional do Alentejo Litoral
+  CSREPC_C21 = 21;
+  // Comando Sub-Regional do Alto Alentejo
+  CSREPC_C22 = 22;
+  // Comando Sub-Regional do Baixo Alentejo
+  CSREPC_C23 = 23;
+  // Comando Sub-Regional do Algarve
+  CSREPC_C24 = 24;
+}
