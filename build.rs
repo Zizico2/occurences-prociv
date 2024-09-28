@@ -1,19 +1,25 @@
 use protox::prost::Message;
+use tempfile::tempdir;
 use std::{env, fs, path::PathBuf, process::Command};
 
-const PROTO_DOWNLOAD: &str = "___protos";
-const PROTO_INCLUDES: [&str; 1] = [PROTO_DOWNLOAD];
+
 const PROTO_FILES: [&str; 1] = ["occurrence/v1/occurrences_service.proto"];
 
 const BUF_SCHEMA: &str = "buf.build/zizico2/prociv-reverse-proxy:228c470f729042b69cf6b9360e2bad4b";
 
 fn main() -> anyhow::Result<()> {
+    let mut proto_download = tempdir()?.into_path();
+    proto_download.push("___protos");
+    let proto_download = proto_download.to_str().unwrap();
+
+    let proto_includes: [&str; 1] = [proto_download];
+
     Command::new("buf")
         .args(["export", BUF_SCHEMA])
-        .args(["--output", PROTO_DOWNLOAD])
+        .args(["--output", proto_download])
         .output()?;
 
-    let file_descriptors = protox::compile(&PROTO_FILES, &PROTO_INCLUDES)?;
+    let file_descriptors = protox::compile(&PROTO_FILES, &proto_includes)?;
 
     let file_descriptor_path =
         PathBuf::from(env::var_os("OUT_DIR").unwrap()).join("file_descriptor_set.bin");
@@ -24,7 +30,7 @@ fn main() -> anyhow::Result<()> {
         .build_client(false)
         .file_descriptor_set_path(&file_descriptor_path)
         .skip_protoc_run()
-        .compile_protos(&PROTO_FILES, &PROTO_INCLUDES)?;
+        .compile_protos(&PROTO_FILES, &proto_includes)?;
 
     Ok(())
 }

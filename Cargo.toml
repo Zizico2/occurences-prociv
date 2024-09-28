@@ -51,6 +51,7 @@ macros = { version = "0.1.0", path = "macros" }
 [build-dependencies]
 anyhow = "1.0.89"
 protox = "0.7.1"
+tempfile = "3.12.0"
 tonic-build = "0.12.3"
 
 [profile.release]
