@@ -45,7 +45,6 @@ jobs:
         with:
           images: |
             ghcr.io/${{ github.repository }}
-        # my-docker-hub-namespace/my-docker-hub-repository
 
       - name: Build and push Docker images
         id: push
@@ -60,6 +59,6 @@ jobs:
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ghcr.io/zizico2/occurences-prociv
+          subject-name: ghcr.io/${{ github.repository }}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
