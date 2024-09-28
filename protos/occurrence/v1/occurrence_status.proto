@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package occurrence.v1;
 
-// TODO: thing about this enum
+// TODO: think about this enum
 enum OccurrenceStatus {
   OCCURRENCE_STATUS_UNSPECIFIED = 0;
   OCCURRENCE_STATUS_FIRST_DISPATCH = 1;

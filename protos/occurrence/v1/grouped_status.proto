@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package occurrence.v1;
 
-// TODO: thing about this enum
+// TODO: think about this enum
 enum GroupedStatus {
   GROUPED_STATUS_UNSPECIFIED = 0;
   GROUPED_STATUS_DISPATCHING = 1;
