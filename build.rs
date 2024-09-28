@@ -14,7 +14,10 @@ async fn main() -> anyhow::Result<()> {
 
     let temp_dir = TempDir::new().await?;
     let temp_dir_path = temp_dir.dir_path();
-    let temp_dir_path_str = temp_dir.dir_path().to_str().unwrap();
+    let temp_dir_path_str = temp_dir
+        .dir_path()
+        .to_str()
+        .ok_or(anyhow::anyhow!("invalid temp dir"))?;
 
     zip_extract::extract(std::io::Cursor::new(bytes), temp_dir_path, true)?;
 
@@ -22,7 +25,8 @@ async fn main() -> anyhow::Result<()> {
 
     let file_descriptors = protox::compile(PROTO_FILES, proto_includes)?;
     let file_descriptor_path =
-        PathBuf::from(env::var_os("OUT_DIR").unwrap()).join("file_descriptor_set.bin");
+        PathBuf::from(env::var_os("OUT_DIR").ok_or(anyhow::anyhow!("invalid OUT_DIR"))?)
+            .join("file_descriptor_set.bin");
     fs::write(&file_descriptor_path, file_descriptors.encode_to_vec())?;
 
     tonic_build::configure()
