@@ -1,0 +1,32 @@
+# syntax=docker/dockerfile:1.8.0
+FROM docker.io/messense/rust-musl-cross:x86_64-musl AS chef
+ARG RUST_CHANNEL=1.81.0
+ARG RUST_TARGET=x86_64-unknown-linux-musl
+ARG CARGO_CHEF_VERSION=0.1.67
+USER root
+RUN <<EOF
+set -e
+rustup toolchain add $RUST_CHANNEL
+rustup target add $RUST_TARGET --toolchain $RUST_CHANNEL
+cargo install cargo-chef --locked --version $CARGO_CHEF_VERSION
+EOF
+WORKDIR /app
+
+FROM chef AS planner
+COPY . .
+RUN cargo chef prepare --recipe-path recipe.json
+
+FROM chef AS builder
+COPY --from=planner /app/recipe.json recipe.json
+RUN --mount=type=ssh cargo chef cook --release --target $RUST_TARGET --recipe-path recipe.json
+COPY . .
+RUN <<EOF
+set -e
+cargo build --release --target $RUST_TARGET -p occurences-prociv --bin occurences-prociv
+musl-strip /app/target/$RUST_TARGET/release/occurences-prociv
+EOF
+
+FROM gcr.io/distroless/static AS runtime
+COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/occurences-prociv /usr/local/bin/
+USER nonroot
+CMD ["/usr/local/bin/occurences-prociv"]
