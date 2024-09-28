@@ -4,12 +4,6 @@ use clap::Parser;
 use futures::stream::BoxStream;
 use futures::StreamExt;
 use futures::TryStreamExt;
-use sentry::types::Dsn;
-use tonic::transport::Server;
-use tonic::Status;
-use tracing::instrument;
-use tracing_subscriber::layer::SubscriberExt;
-use tracing_subscriber::util::SubscriberInitExt;
 use occurences_prociv::json_api::OccurrencesClient;
 use occurences_prociv::occurrences;
 use occurences_prociv::occurrences::occurrence::v1::occurrences_service_server::OccurrencesService;
@@ -17,15 +11,16 @@ use occurences_prociv::occurrences::occurrence::v1::occurrences_service_server::
 use occurences_prociv::occurrences::occurrence::v1::ListOccurrencesRequest;
 use occurences_prociv::occurrences::occurrence::v1::ListOccurrencesResponse;
 use occurences_prociv::occurrences::occurrence::v1::Occurrence;
+use sentry::types::Dsn;
+use tonic::transport::Server;
+use tonic::Status;
+use tracing::instrument;
+use tracing_subscriber::layer::SubscriberExt;
+use tracing_subscriber::util::SubscriberInitExt;
 
 #[derive(Debug, clap::Parser)]
 struct Args {
-    #[clap(
-        short,
-        long,
-        env,
-        default_value = "https://prociv-agserver.geomai.mai.gov.pt/arcgis/rest/services/Ocorrencias_Base/FeatureServer/0/query"
-    )]
+    #[clap(short, long, env)]
     prociv_fires_base_url: String,
     #[clap(short, long, env)]
     sentry_dsn: String,
