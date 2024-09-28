@@ -16,6 +16,11 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
+      - uses: bufbuild/buf-action@v1
+        with:
+          # token: ${{ secrets.BUF_TOKEN }}
+          setup_only: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
