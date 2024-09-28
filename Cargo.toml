@@ -14,7 +14,6 @@ chrono = { version = "0.4.38", features = ["serde"] }
 clap = { version = "4.5.18", features = ["derive", "env"] }
 dotenvy = "0.15.7"
 futures = "0.3.30"
-mongodb = "3.1.0"
 prost = "0.13.3"
 prost-types = "0.13.3"
 reqwest = { version = "0.12.7", default-features = false, features = [
@@ -62,8 +61,6 @@ reqwest = { version = "0.12.7", default-features = false, features = [
 ] }
 tokio = { version = "1.40.0", features = ["full", "tracing"] }
 async-compression = { version = "0.4.12", features = ["tokio", "zlib"] }
-tokio-tar = "0.3.1"
-futures = "0.3.30"
 async-tempfile = "0.6.0"
 zip-extract = "0.2.1"
 
