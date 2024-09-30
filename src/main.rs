@@ -54,8 +54,8 @@ async fn main() -> anyhow::Result<()> {
         .register_encoded_file_descriptor_set(occurrences::FILE_DESCRIPTOR_SET)
         .build_v1()?;
 
+    // TODO: port should come from ENV var
     let addr = "[::0]:50051".parse()?;
-    // let addr = "0.0.0.0:8000".parse()?;
 
     Server::builder()
         .add_service(reflection)
