@@ -57,9 +57,9 @@ impl OccurrencesClient {
         try_stream! {
             let fires = request?
                 .send()
-                .await.map_err(|_| OccurrencesError::Unknown)?
+                .await.inspect_err(|err| tracing::error!("send: {err}")).map_err(|_| OccurrencesError::Unknown)?
                 .json::<Features>()
-                .await.map_err(|_| OccurrencesError::Unknown)?;
+                .await.inspect_err(|err| tracing::error!("json: {err}")).map_err(|_| OccurrencesError::Unknown)?;
 
             for i in fires.features.into_iter() {
                 yield i;
