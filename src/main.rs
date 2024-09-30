@@ -54,8 +54,9 @@ async fn main() -> anyhow::Result<()> {
         .register_encoded_file_descriptor_set(occurrences::FILE_DESCRIPTOR_SET)
         .build_v1()?;
 
+    // TODO: port should come from ENV var
     let addr = "[::0]:50051".parse()?;
-    // let addr = "0.0.0.0:8000".parse()?;
+    // let addr = "127.0.0.1:50051".parse()?;
 
     Server::builder()
         .add_service(reflection)
@@ -86,7 +87,8 @@ impl OccurrencesService for Occurrences {
             .map_ok(Occurrence::from)
             .map_ok(|occurrence| ListOccurrencesResponse {
                 occurrence: Some(occurrence),
-            });
+            })
+            .inspect_ok(|occ| tracing::info!("{:?}", occ));
 
         Ok(tonic::Response::new(occurrences.boxed()))
     }

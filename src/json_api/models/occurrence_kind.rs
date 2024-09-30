@@ -81,4 +81,6 @@ pub enum OccurenceKind {
     C4335 = 4335,
     C4339 = 4339,
     C9103 = 9103,
+    #[serde(other)]
+    Unspecified,
 }

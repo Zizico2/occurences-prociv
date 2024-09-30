@@ -1,4 +1,5 @@
 use macros::code_consts;
+use occurrence::v1::Kind;
 
 use crate::{json_api::models::occurrence_kind::OccurenceKind, occurrences::*};
 
@@ -85,6 +86,8 @@ impl From<OccurenceKind> for occurrence::v1::Kind {
             OccurenceKind::C4335 => code_consts::C4335,
             OccurenceKind::C4339 => code_consts::C4339,
             OccurenceKind::C9103 => code_consts::C9103,
+            // TODO: add error type...
+            OccurenceKind::Unspecified => Kind { inner: None },
         }
     }
 }

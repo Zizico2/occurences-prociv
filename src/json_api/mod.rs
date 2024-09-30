@@ -1,3 +1,5 @@
+use core::str;
+
 use async_stream::try_stream;
 use futures::TryStream;
 use models::{Feature, Features};
@@ -38,7 +40,8 @@ pub enum OccurrencesError {
 // TODO: exceededTransferLimit
 impl OccurrencesClient {
     fn occorrences_request(&self) -> Result<RequestBuilder, OccurrencesError> {
-        self.reqwest_client
+        let client = self
+            .reqwest_client
             .get(&self.base_url)
             .query(&QueryParams {
                 f: "json".into(),
@@ -50,18 +53,41 @@ impl OccurrencesClient {
                 return_geometry: false,
             })
             .try_clone()
-            .ok_or(OccurrencesError::Unknown)
+            .ok_or(OccurrencesError::Unknown)?;
+
+        Ok(client)
+    }
+    async fn occorrences_iter(
+        request: Result<RequestBuilder, OccurrencesError>,
+    ) -> Result<Features, OccurrencesError> {
+        let occurrences = request?
+            .send()
+            .await
+            .inspect_err(|err| tracing::error!("send: {err}"))
+            .map_err(|_| OccurrencesError::Unknown)?
+            .bytes()
+            .await
+            .inspect_err(|err| tracing::error!("couldn't get body as bytes: {err}"))
+            .map_err(|_| OccurrencesError::Unknown)?;
+
+        let features = match serde_json::from_slice(&occurrences) {
+            Ok(features) => features,
+            Err(err) => {
+                let occurrences = str::from_utf8(&occurrences)
+                    .inspect_err(|err| tracing::error!("body is invalid utf8: {err}"))
+                    .map_err(|_| OccurrencesError::Unknown)?;
+                tracing::error!("{err}: {occurrences}");
+                return Err(OccurrencesError::Unknown);
+            }
+        };
+        Ok(features)
     }
     pub fn occorrences(&self) -> impl TryStream<Ok = Feature, Error = OccurrencesError> {
         let request = self.occorrences_request();
         try_stream! {
-            let fires = request?
-                .send()
-                .await.map_err(|_| OccurrencesError::Unknown)?
-                .json::<Features>()
-                .await.map_err(|_| OccurrencesError::Unknown)?;
+            let occorrences = Self::occorrences_iter(request).await?;
 
-            for i in fires.features.into_iter() {
+            for i in occorrences.features.into_iter() {
                 yield i;
             }
         }
